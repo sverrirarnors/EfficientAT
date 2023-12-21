@@ -15,7 +15,7 @@ from datasets.helpers.audiodatasets import PreprocessDataset, get_roll_func
 # follow the instructions here to get these 2 files:
 # https://github.com/kkoutini/PaSST/tree/main/openmic
 
-dataset_dir = None
+dataset_dir = "./openmic"
 
 assert dataset_dir is not None, "Specify OpenMic dataset location in variable 'dataset_dir'. " \
                                 "Check out the Readme file for further instructions. " \
