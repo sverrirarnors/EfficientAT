@@ -243,7 +243,7 @@ def _dymn(
         # download from GitHub or load cached state_dict from 'resources' folder
         # model_url = pretrained_models.get(pretrained_name)
         # state_dict = load_state_dict_from_url(model_url, model_dir=model_dir, map_location="cpu")
-        state_dict = load_state_dict(load("./openmic.pt"), model_dir=model_dir, map_location="cpu")
+        state_dict = load("./openmic.pt")
         cls_in_state_dict = state_dict['classifier.5.weight'].shape[0]
         cls_in_current_model = model.classifier[5].out_features
         if cls_in_state_dict != cls_in_current_model:
