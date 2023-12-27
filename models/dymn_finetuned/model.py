@@ -304,11 +304,11 @@ def get_model(num_classes: int = 527,
     """
 
     block = DY_Block
-    if pretrained_name:
+    # if pretrained_name:
         # if model is pre-trained, set Dy-Conv temperature to 'pretrain_final_temp'
         # pretrained on ImageNet -> 30
         # pretrained on AudioSet -> 1
-        T_max = pretrain_final_temp
+    T_max = pretrain_final_temp
 
     temp_schedule = (T_max, T_min, T0_slope, T1_slope)
 
