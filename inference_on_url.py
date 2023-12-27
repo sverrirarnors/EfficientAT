@@ -1,9 +1,11 @@
+import io
 import argparse
 import torch
 import librosa
 import numpy as np
 from torch import autocast
 from contextlib import nullcontext
+from urllib.request import urlopen
 
 from models.mn.model import get_model as get_mobilenet
 from models.dymn.model import get_model as get_dymn
@@ -35,7 +37,7 @@ def audio_tagging(args):
     mel.to(device)
     mel.eval()
 
-    (waveform, _) = librosa.core.load(audio_path, sr=sample_rate, mono=True, offset=30, duration=10)
+    (waveform, _) = librosa.core.load(io.BytesIO(urlopen(audio_path)), sr=sample_rate, mono=True, offset=30, duration=10)
     waveform = torch.from_numpy(waveform[None, :]).to(device)
 
     # our models are trained in half precision mode (torch.float16)
