@@ -37,7 +37,7 @@ def audio_tagging(args):
     mel.to(device)
     mel.eval()
 
-    (waveform, _) = librosa.core.load(io.BytesIO(urlopen(audio_path)), sr=sample_rate, mono=True, offset=30, duration=10)
+    (waveform, _) = librosa.core.load(io.BytesIO(urlopen(audio_path).read()), sr=sample_rate, mono=True, offset=30, duration=10)
     waveform = torch.from_numpy(waveform[None, :]).to(device)
 
     # our models are trained in half precision mode (torch.float16)
