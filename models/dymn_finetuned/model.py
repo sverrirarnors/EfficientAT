@@ -233,38 +233,32 @@ def _dymn_conf(
 def _dymn(
         inverted_residual_setting: List[DynamicInvertedResidualConfig],
         last_channel: int,
-        pretrained_name: str,
         **kwargs: Any,
 ):
     model = DyMN(inverted_residual_setting, last_channel, **kwargs)
 
     # load pre-trained model using specified name
-    if pretrained_name:
-        # download from GitHub or load cached state_dict from 'resources' folder
-        # model_url = pretrained_models.get(pretrained_name)
-        # state_dict = load_state_dict_from_url(model_url, model_dir=model_dir, map_location="cpu")
-        state_dict = load("/cluster/home/sarnorsson/projects/content-id/EfficientAT/models/dymn_finetuned/openmic.pt")
-        cls_in_state_dict = state_dict['classifier.5.weight'].shape[0]
-        cls_in_current_model = model.classifier[5].out_features
-        if cls_in_state_dict != cls_in_current_model:
-            print(f"The number of classes in the loaded state dict (={cls_in_state_dict}) and "
-                  f"the current model (={cls_in_current_model}) is not the same. Dropping final fully-connected layer "
-                  f"and loading weights in non-strict mode!")
-            del state_dict['classifier.5.weight']
-            del state_dict['classifier.5.bias']
-            model.load_state_dict(state_dict, strict=False)
-        else:
-            model.load_state_dict(state_dict)
+    state_dict = load("/cluster/home/sarnorsson/projects/content-id/EfficientAT/models/dymn_finetuned/openmic.pt")
+    cls_in_state_dict = state_dict['classifier.5.weight'].shape[0]
+    cls_in_current_model = model.classifier[5].out_features
+    if cls_in_state_dict != cls_in_current_model:
+        print(f"The number of classes in the loaded state dict (={cls_in_state_dict}) and "
+                f"the current model (={cls_in_current_model}) is not the same. Dropping final fully-connected layer "
+                f"and loading weights in non-strict mode!")
+        del state_dict['classifier.5.weight']
+        del state_dict['classifier.5.bias']
+        model.load_state_dict(state_dict, strict=False)
+    else:
+        model.load_state_dict(state_dict)
     return model
 
 
-def dymn(pretrained_name: str = None, **kwargs: Any):
+def dymn(**kwargs: Any):
     inverted_residual_setting, last_channel = _dymn_conf(**kwargs)
-    return _dymn(inverted_residual_setting, last_channel, pretrained_name, **kwargs)
+    return _dymn(inverted_residual_setting, last_channel, **kwargs)
 
 
 def get_model(num_classes: int = 527,
-              pretrained_name: str = None,
               width_mult: float = 1.0,
               strides: Tuple[int, int, int, int] = (2, 2, 2, 2),
               # Context
