@@ -1,6 +1,6 @@
 from functools import partial
 from typing import Any, Callable, List, Optional, Sequence, Tuple
-from torch import nn, Tensor, load_state_dict, load
+from torch import nn, Tensor, load
 import torch.nn.functional as F
 from torchvision.ops.misc import ConvNormActivation
 import urllib.parse
