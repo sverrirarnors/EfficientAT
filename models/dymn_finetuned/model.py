@@ -313,7 +313,6 @@ def get_model(num_classes: int = 527,
     temp_schedule = (T_max, T_min, T0_slope, T1_slope)
 
     m = dymn(num_classes=num_classes,
-             pretrained_name=pretrained_name,
              block=block,
              width_mult=width_mult,
              strides=strides,
