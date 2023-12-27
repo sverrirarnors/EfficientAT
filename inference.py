@@ -7,6 +7,7 @@ from contextlib import nullcontext
 
 from models.mn.model import get_model as get_mobilenet
 from models.dymn.model import get_model as get_dymn
+from models.dymn_finetuned.model import get_model as get_dymn_finetuned
 from models.ensemble import get_ensemble_model
 from models.preprocess import AugmentMelSTFT
 from helpers.utils import NAME_TO_WIDTH, labels
@@ -28,7 +29,10 @@ def audio_tagging(args):
     if len(args.ensemble) > 0:
         model = get_ensemble_model(args.ensemble)
     else:
-        if model_name.startswith("dymn"):
+        if model_name.startswith("dymn_finetuned"):
+            model = get_dymn_finetuned(width_mult=NAME_TO_WIDTH(model_name), pretrained_name=model_name,
+                                  strides=args.strides)
+        elif model_name.startswith("dymn"):
             model = get_dymn(width_mult=NAME_TO_WIDTH(model_name), pretrained_name=model_name,
                                   strides=args.strides)
         else:
