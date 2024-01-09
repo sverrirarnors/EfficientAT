@@ -30,7 +30,7 @@ def audio_tagging(args):
         model = get_ensemble_model(args.ensemble)
     else:
         if model_name.startswith("dymn_finetuned"):
-            model = get_dymn_finetuned(width_mult=NAME_TO_WIDTH("dymn10_as"), pretrained_name=model_name,
+            model = get_dymn_finetuned(width_mult=NAME_TO_WIDTH("dymn10_as"),
                                   strides=args.strides)
         elif model_name.startswith("dymn"):
             model = get_dymn(width_mult=NAME_TO_WIDTH(model_name), pretrained_name=model_name,
