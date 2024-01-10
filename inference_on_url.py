@@ -50,9 +50,12 @@ def audio_tagging(args):
 
     sorted_indexes = np.argsort(preds)[::-1]
 
+    target_indexes = ['/m/05r5c', '/m/0l14_3', '/m/085jw', '/m/0y4f8', '/m/0fx80y']
     # Print audio tagging top probabilities
     print("************* Acoustic Event Detected: *****************")
-    for k in range(20):
+    for k in range(len(sorted_indexes)):
+        if sorted_indexes[k] not in target_indexes:
+            continue
         print('{}: {:.3f}'.format(labels[sorted_indexes[k]],
             preds[sorted_indexes[k]]))
     print("********************************************************")
