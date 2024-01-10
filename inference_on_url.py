@@ -54,7 +54,6 @@ def audio_tagging(args):
     # Print audio tagging top probabilities
     print("************* Acoustic Event Detected: *****************")
     for k in range(len(sorted_indexes)):
-        print(sorted_indexes[k])
         if sorted_indexes[k] not in target_indexes:
             continue
         print('{}: {:.3f}'.format(labels[sorted_indexes[k]],
